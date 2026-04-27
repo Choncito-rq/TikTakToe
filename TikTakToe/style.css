@@ -1,20 +1,20 @@
 /* ═══════════════════════════════════════════════════════════════
-   TIK TAK TOE — Retro Blue / Purple / White / Black Design System
+   TIK TAK TOE — Retro Black Design System
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
   /* Palette */
-  --black:     #04040f;
-  --deep:      #07071a;
-  --panel:     #0c0c28;
+  --black:     #000000;
+  --deep:      #050505;
+  --panel:     #0a0a0a;
   --border:    #1e1e5a;
   --blue:      #1a6fff;
   --blue-lt:   #4d9fff;
   --purple:    #7b2fff;
   --purple-lt: #a96fff;
   --violet:    #c24bff;
-  --white:     #e8eaff;
-  --white-dim: #6a6aaa;
+  --white:     #ffffff;
+  --white-dim: #999999;
 
   /* Semantics */
   --x-clr:    #ff4d8f;
@@ -65,21 +65,6 @@ html, body {
   pointer-events: none;
 }
 
-.bg-orbs { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; display: none; }
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.18;
-  animation: drift 18s ease-in-out infinite alternate;
-}
-.orb1 { width: 500px; height: 500px; background: var(--purple); top: -15%; left: -10%; animation-delay: 0s; }
-.orb2 { width: 400px; height: 400px; background: var(--blue);   bottom: -10%; right: -10%; animation-delay: -6s; }
-.orb3 { width: 300px; height: 300px; background: var(--violet); top: 40%; left: 50%; animation-delay: -12s; }
-@keyframes drift {
-  from { transform: translate(0,0) scale(1); }
-  to   { transform: translate(40px,30px) scale(1.12); }
-}
 
 /* ── AUDIO BTN ──────────────────────────────────────────────── */
 .audio-btn {
@@ -240,26 +225,6 @@ html, body {
   letter-spacing: 3px;
 }
 
-/* TICKER */
-.ticker-wrap {
-  width: 100%; overflow: hidden;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 8px 0;
-  background: var(--deep);
-}
-.ticker {
-  display: flex; white-space: nowrap;
-  animation: ticker 22s linear infinite;
-}
-.ticker span {
-  font-family: var(--f-arcade);
-  font-size: clamp(0.38rem, 1.4vw, 0.5rem);
-  color: var(--purple-lt);
-  letter-spacing: 3px;
-  padding-right: 80px;
-}
-@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ══════════════════════════════════════════════════
    SCREEN 2 — REGISTRO
