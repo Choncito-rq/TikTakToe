@@ -65,7 +65,7 @@ html, body {
   pointer-events: none;
 }
 
-.bg-orbs { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.bg-orbs { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; display: none; }
 .orb {
   position: absolute;
   border-radius: 50%;
@@ -201,13 +201,13 @@ html, body {
 .mode-card::before {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, var(--blue)10, var(--purple)10);
+  background: rgba(255, 255, 255, 0.05); 
   opacity: 0;
   transition: opacity .25s;
 }
 .mode-card:hover {
-  border-color: var(--blue);
-  box-shadow: var(--glow-blue);
+  border-color: var(--white);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
   transform: translateY(-4px);
 }
 .mode-card:hover::before { opacity: 1; }
@@ -217,7 +217,7 @@ html, body {
 .mc-deco {
   position: absolute;
   width: 10px; height: 10px;
-  border-color: var(--blue);
+  border-color: var(--white); 
   border-style: solid;
 }
 .mc-deco.top-left  { top: 6px; left: 6px;  border-width: 2px 0 0 2px; }
@@ -225,7 +225,7 @@ html, body {
 .mc-deco.bot-left  { bottom: 6px; left: 6px;  border-width: 0 0 2px 2px; }
 .mc-deco.bot-right { bottom: 6px; right: 6px; border-width: 0 2px 2px 0; }
 
-.mc-icon  { font-size: clamp(2rem, 7vw, 3rem); }
+.mc-icon  { font-size: clamp(2rem, 7vw, 3rem); color: var(--white); text-shadow: var(--glow-white); }
 .mc-title {
   font-family: var(--f-arcade);
   font-size: clamp(0.42rem, 1.8vw, 0.62rem);
@@ -236,7 +236,7 @@ html, body {
 .mc-sub {
   font-family: var(--f-vt);
   font-size: clamp(0.9rem, 3vw, 1.2rem);
-  color: var(--white-dim);
+  color: var(--white);
   letter-spacing: 3px;
 }
 
