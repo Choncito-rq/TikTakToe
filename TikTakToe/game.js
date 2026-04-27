@@ -216,70 +216,101 @@ const Music = (() => {
 })();
 
 /* ─────────────────────────────────────────────────────────────
-   VOICE ENGINE (Web Speech API)
+   VOICE ENGINE (Web Speech API) — con fallback robusto
 ───────────────────────────────────────────────────────────── */
 const Voice = (() => {
   const synth = window.speechSynthesis;
-  let voiceReady = false;
-  let voices = [];
-
-  // Preload voices
-  function loadVoices() {
-    voices = synth.getVoices().filter(v => v.lang.startsWith('es'));
-    if (voices.length) voiceReady = true;
-  }
-  loadVoices();
-  if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = loadVoices;
 
   const speechEl  = document.getElementById('speech-bubble');
   const speechTxt = document.getElementById('speech-text');
   let bubbleTimer  = null;
+  let voiceEnabled = true; // El usuario puede silenciarla
 
+  // ── Carga de voces ──
+  // Chrome carga las voces de forma asíncrona; esperamos hasta 3 intentos
+  let selectedVoice = null;
+
+  function pickVoice() {
+    const all = synth.getVoices();
+    if (!all.length) return;
+
+    // Prioridad: español México → español cualquiera → primera disponible
+    selectedVoice =
+      all.find(v => v.lang === 'es-MX') ||
+      all.find(v => v.lang === 'es-US') ||
+      all.find(v => v.lang.startsWith('es')) ||
+      all[0]; // Fallback absoluto: cualquier voz
+
+    console.log('[Voice] Voz seleccionada:', selectedVoice?.name, selectedVoice?.lang);
+  }
+
+  pickVoice();
+  if (synth.onvoiceschanged !== undefined) {
+    synth.onvoiceschanged = pickVoice;
+  }
+  // Reintento extra por si Chrome tarda
+  setTimeout(pickVoice, 500);
+  setTimeout(pickVoice, 1500);
+
+  // ── Burbuja de texto ──
   function showBubble(text) {
     clearTimeout(bubbleTimer);
     speechTxt.textContent = text;
     speechEl.classList.remove('hidden');
-    bubbleTimer = setTimeout(() => speechEl.classList.add('hidden'), Math.max(3000, text.length * 70));
+    const dur = Math.max(3000, text.length * 65);
+    bubbleTimer = setTimeout(() => speechEl.classList.add('hidden'), dur);
   }
 
+  // ── Speak principal ──
   function speak(text, { rate = 1, pitch = 1, volume = 1 } = {}) {
-    if (!synth) return;
+    showBubble(text); // Siempre muestra el texto aunque la voz falle
+
+    if (!synth || !voiceEnabled) return;
+
+    // Workaround Chrome: cancel antes de hablar
     synth.cancel();
+
     const utt = new SpeechSynthesisUtterance(text);
-    if (voices.length) utt.voice = voices[0];
-    utt.lang   = 'es-MX';
+
+    // Asignar voz si ya está disponible
+    if (selectedVoice) utt.voice = selectedVoice;
+
+    // Siempre poner lang para que el motor elija si selectedVoice es null
+    utt.lang   = selectedVoice?.lang || 'es-MX';
     utt.rate   = rate;
     utt.pitch  = pitch;
     utt.volume = volume;
-    synth.speak(utt);
-    showBubble(text);
+
+    utt.onerror = (e) => console.warn('[Voice] Error:', e.error, '| texto:', text);
+    utt.onstart = () => console.log('[Voice] Hablando:', text);
+
+    // Chrome bug: a veces se congela; este workaround lo desbloquea
+    setTimeout(() => synth.speak(utt), 50);
   }
 
   return {
+    speak, // expuesto para pruebas externas
+    setEnabled(val) { voiceEnabled = val; },
+    isEnabled() { return voiceEnabled; },
+
     turn(name) {
-      speak(`¡Es turno de ${name}!`, { rate: 0.95, pitch: 1.1 });
+      speak(`¡Es turno de ${name}!`, { rate: 0.92, pitch: 1.1 });
     },
     cell(row, col) {
-      speak(`Seleccionando casilla ${row}, ${col}`, { rate: 1.05, pitch: 1 });
+      speak(`Casilla ${row} ${col}`, { rate: 1.05, pitch: 1 });
     },
     countdown(n) {
-      if (n === 0) speak('¡YA!', { rate: 0.85, pitch: 1.3 });
-      else speak(String(n), { rate: 0.75, pitch: 1 + n * 0.08 });
+      if (n === 0) speak('¡YA!', { rate: 0.8, pitch: 1.3 });
+      else speak(String(n), { rate: 0.72, pitch: 1 + n * 0.08 });
     },
     win(name, isMachine) {
       const msg = isMachine
-        ? `¡Ohhh no... la máquina gana! Inténtalo de nuevo, campeón.`
-        : `¡¡Guaooow!! ¡¡Ganaste!! ¡Eres tremendo, ${name}!!`;
-      speak(msg, { rate: 0.9, pitch: isMachine ? 0.85 : 1.25 });
-    },
-    lose(name) {
-      speak(`Ohhh no, has perdido. ¡Pero tú puedes, ${name}!`, { rate: 0.9, pitch: 0.9 });
+        ? `¡Ohhh no! La máquina te ganó. ¡Inténtalo de nuevo!`
+        : `¡Guaaaooow! ¡Ganaste! ¡Eres tremendo, ${name}!`;
+      speak(msg, { rate: 0.88, pitch: isMachine ? 0.85 : 1.2 });
     },
     draw() {
-      speak(`¡Empate! ¡Nadie puede con nadie hoy!`, { rate: 1, pitch: 1.05 });
-    },
-    machineThinks() {
-      speak(`La máquina está pensando...`, { rate: 1.1, pitch: 0.95 });
+      speak(`¡Empate! ¡Nadie puede con nadie hoy!`, { rate: 0.95, pitch: 1.05 });
     },
     start() {
       speak(`¡La partida comienza!`, { rate: 1, pitch: 1.1 });
