@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
- T IK TAK TOE — ga*me.js (EDICIÓN FINAL PARA FIREFOX)
+ T IK TAK TOE — ga*me.js (EDICIÓN FINAL ANTI-BUG FIREFOX)
  Stars · Retro Music (Web Audio) · Voice (Web Speech API) · Game
  ═══════════════════════════════════════════════════════════════ */
 
@@ -24,11 +24,11 @@
   for (let i = 0; i < 120; i++) {
     stars.push({
       x:      Math.random() * innerWidth,
-               y:      Math.random() * innerHeight,
-               r:      Math.random() * 1.4 + 0.2,
-               a:      Math.random(),
-               da:     (Math.random() * 0.004 + 0.001) * (Math.random() < .5 ? 1 : -1),
-               color: ['#4d9fff','#a96fff','#ffffff','#c24bff'][Math.floor(Math.random()*4)],
+      y:      Math.random() * innerHeight,
+      r:      Math.random() * 1.4 + 0.2,
+      a:      Math.random(),
+      da:     (Math.random() * 0.004 + 0.001) * (Math.random() < .5 ? 1 : -1),
+      color: ['#4d9fff','#a96fff','#ffffff','#c24bff'][Math.floor(Math.random()*4)],
     });
   }
 
@@ -154,60 +154,60 @@ const Music = (() => {
       nodes = [];
     },
     toggle() { playing ? this.stop() : this.start(); return playing; },
-               isPlaying() { return playing; },
-               sfx(type) {
-                 mkCtx();
-                 if (ctx.state === 'suspended') ctx.resume();
-                 const g = ctx.createGain();
-                 g.connect(ctx.destination);
-                 const t = ctx.currentTime;
+    isPlaying() { return playing; },
+    sfx(type) {
+      mkCtx();
+      if (ctx.state === 'suspended') ctx.resume();
+      const g = ctx.createGain();
+      g.connect(ctx.destination);
+      const t = ctx.currentTime;
 
-                 if (type === 'place') {
-                   const o = ctx.createOscillator();
-                   o.type = 'square'; o.frequency.value = 660;
-                   g.gain.setValueAtTime(0.15, t);
-                   g.gain.exponentialRampToValueAtTime(0.0001, t + 0.1);
-                   o.connect(g); o.start(t); o.stop(t + 0.12);
-                 } else if (type === 'win') {
-                   [523,659,784,1047].forEach((f, i) => {
-                     const o = ctx.createOscillator();
-                     o.type = 'square'; o.frequency.value = f;
-                     const gg = ctx.createGain();
-                     gg.gain.setValueAtTime(0.18, t + i*0.1);
-                     gg.gain.exponentialRampToValueAtTime(0.0001, t + i*0.1 + 0.18);
-                     o.connect(gg); gg.connect(ctx.destination);
-                     o.start(t + i*0.1); o.stop(t + i*0.1 + 0.2);
-                   });
-                 } else if (type === 'lose') {
-                   [330,262,196,165].forEach((f, i) => {
-                     const o = ctx.createOscillator();
-                     o.type = 'sawtooth'; o.frequency.value = f;
-                     const gg = ctx.createGain();
-                     gg.gain.setValueAtTime(0.15, t + i*0.12);
-                     gg.gain.exponentialRampToValueAtTime(0.0001, t + i*0.12 + 0.2);
-                     o.connect(gg); gg.connect(ctx.destination);
-                     o.start(t + i*0.12); o.stop(t + i*0.12 + 0.22);
-                   });
-                 } else if (type === 'draw') {
-                   const o = ctx.createOscillator();
-                   o.type = 'triangle'; o.frequency.setValueAtTime(440, t);
-                   o.frequency.linearRampToValueAtTime(220, t + 0.4);
-                   g.gain.setValueAtTime(0.15, t);
-                   g.gain.exponentialRampToValueAtTime(0.0001, t + 0.45);
-                   o.connect(g); o.start(t); o.stop(t + 0.5);
-                 } else if (type === 'click') {
-                   const o = ctx.createOscillator();
-                   o.type = 'square'; o.frequency.value = 880;
-                   g.gain.setValueAtTime(0.08, t);
-                   g.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
-                   o.connect(g); o.start(t); o.stop(t + 0.06);
-                 }
-               }
+      if (type === 'place') {
+        const o = ctx.createOscillator();
+        o.type = 'square'; o.frequency.value = 660;
+        g.gain.setValueAtTime(0.15, t);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.1);
+        o.connect(g); o.start(t); o.stop(t + 0.12);
+      } else if (type === 'win') {
+        [523,659,784,1047].forEach((f, i) => {
+          const o = ctx.createOscillator();
+          o.type = 'square'; o.frequency.value = f;
+          const gg = ctx.createGain();
+          gg.gain.setValueAtTime(0.18, t + i*0.1);
+          gg.gain.exponentialRampToValueAtTime(0.0001, t + i*0.1 + 0.18);
+          o.connect(gg); gg.connect(ctx.destination);
+          o.start(t + i*0.1); o.stop(t + i*0.1 + 0.2);
+        });
+      } else if (type === 'lose') {
+        [330,262,196,165].forEach((f, i) => {
+          const o = ctx.createOscillator();
+          o.type = 'sawtooth'; o.frequency.value = f;
+          const gg = ctx.createGain();
+          gg.gain.setValueAtTime(0.15, t + i*0.12);
+          gg.gain.exponentialRampToValueAtTime(0.0001, t + i*0.12 + 0.2);
+          o.connect(gg); gg.connect(ctx.destination);
+          o.start(t + i*0.12); o.stop(t + i*0.12 + 0.22);
+        });
+      } else if (type === 'draw') {
+        const o = ctx.createOscillator();
+        o.type = 'triangle'; o.frequency.setValueAtTime(440, t);
+        o.frequency.linearRampToValueAtTime(220, t + 0.4);
+        g.gain.setValueAtTime(0.15, t);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.45);
+        o.connect(g); o.start(t); o.stop(t + 0.5);
+      } else if (type === 'click') {
+        const o = ctx.createOscillator();
+        o.type = 'square'; o.frequency.value = 880;
+        g.gain.setValueAtTime(0.08, t);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+        o.connect(g); o.start(t); o.stop(t + 0.06);
+      }
+    }
   };
 })();
 
 /* ─────────────────────────────────────────────────────────────
- V OICE ENGINE (We*b Speech API) — OPTIMIZADO PARA FIREFOX
+ V OICE ENGINE (We*b Speech API) — ANTI BUG FIREFOX
  ───────────────────────────────────────────────────────────── */
 const Voice = (() => {
   const synth = window.speechSynthesis;
@@ -215,6 +215,9 @@ const Voice = (() => {
   const speechTxt = document.getElementById('speech-text');
   let bubbleTimer  = null;
   let voiceEnabled = true;
+  
+  // HACK FIREFOX
+  let colaMemoria = [];
 
   function showBubble(text) {
     clearTimeout(bubbleTimer);
@@ -230,12 +233,10 @@ const Voice = (() => {
       return;
     }
 
-    // Si es un mensaje forzado (Victoria/Empate), limpiamos la cola
     if (force) synth.cancel();
 
     const utt = new SpeechSynthesisUtterance(text);
     const voices = synth.getVoices();
-    // Priorizamos español para evitar acentos extraños
     const v = voices.find(v => v.lang.includes('es')) || voices[0];
 
     if (v) utt.voice = v;
@@ -243,36 +244,37 @@ const Voice = (() => {
     utt.rate = rate;
     utt.pitch = pitch;
 
-    utt.onstart = () => showBubble(text);
+    colaMemoria.push(utt);
 
-    // Dejamos que el navegador maneje la cola naturalmente
+    utt.onstart = () => showBubble(text);
+    
+    utt.onend = () => {
+        colaMemoria = colaMemoria.filter(item => item !== utt);
+    };
+
+    utt.onerror = (e) => {
+        console.warn("Voice Error:", e);
+        colaMemoria = colaMemoria.filter(item => item !== utt);
+    };
+
     synth.speak(utt);
   }
 
   return {
     setEnabled(val) { voiceEnabled = val; },
-               isEnabled() { return voiceEnabled; },
-               turn(name) {
-                 // Un poco más rápido para que no pise el siguiente movimiento
-                 speak(`Es turno de ${name}`, { rate: 1.15, pitch: 1.05 });
-               },
-               cell(row, col) {
-                 speak(`Casilla ${row} ${col}`, { rate: 1.25, pitch: 1 });
-               },
-               countdown(n) {
-                 const text = n === 0 ? "¡YA!" : String(n);
-                 speak(text, { rate: 1.4, pitch: 1.2 });
-               },
-               win(name, isMachine) {
-                 const msg = isMachine ? "¡Perdiste contra la máquina!" : `¡Ganaste, ${name}!`;
-                 speak(msg, { rate: 1, pitch: 1.1, force: true });
-               },
-               draw() {
-                 speak("¡Es un empate!", { rate: 1, pitch: 1, force: true });
-               },
-               start() {
-                 speak("¡Comenzamos!", { rate: 1.1, pitch: 1.1 });
-               }
+    isEnabled() { return voiceEnabled; },
+    turn(name) { speak(`Es turno de ${name}`, { rate: 1.15, pitch: 1.05 }); },
+    cell(row, col) { speak(`Casilla ${row} ${col}`, { rate: 1.25, pitch: 1 }); },
+    countdown(n) {
+      const text = n === 0 ? "¡YA!" : String(n);
+      speak(text, { rate: 1.4, pitch: 1.2 });
+    },
+    win(name, isMachine) {
+      const msg = isMachine ? "¡Perdiste contra la máquina!" : `¡Ganaste, ${name}!`;
+      speak(msg, { rate: 1, pitch: 1.1, force: true });
+    },
+    draw() { speak("¡Es un empate!", { rate: 1, pitch: 1, force: true }); },
+    start() { speak("¡Comenzamos!", { rate: 1.1, pitch: 1.1 }); }
   };
 })();
 
@@ -395,7 +397,7 @@ function startCountdown() {
 
     i++;
     if (i < steps.length) {
-      setTimeout(step, 1000); // Un segundo exacto para que la voz no se amontone
+      setTimeout(step, 1000); 
     } else {
       setTimeout(() => {
         cdOverlay.classList.add('hidden');
@@ -417,7 +419,7 @@ function startRound() {
 
   updateTurnUI();
   Voice.start();
-  // Un pequeño retraso para que el "Comenzamos" no pise al primer turno
+  
   setTimeout(() => { if(!G.over) Voice.turn(G.players[G.current]); }, 1000);
 
   if (G.mode === 'solo' && G.current === 1) {
@@ -465,7 +467,7 @@ function playMove(idx) {
   } else {
     G.current = 1 - G.current;
     updateTurnUI();
-    // Esperamos un poco para anunciar el turno para que se entienda bien --------------------------------
+    
     setTimeout(() => { if(!G.over) Voice.turn(G.players[G.current]); }, 600);
 
     if (G.mode === 'solo' && G.current === 1) {
