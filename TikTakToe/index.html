@@ -35,7 +35,7 @@
     <div class="menu-wrap">
 
       <div class="title-block">
-        <div class="title-cat">🐱</div>
+        <div class="title-cat">#</div>
         <h1 class="title-arcade">
           <span class="ta-t">TIK</span><span class="ta-sep">✦</span><span class="ta-k">TAK</span><span class="ta-sep">✦</span><span class="ta-e">TOE</span>
         </h1>
@@ -49,7 +49,7 @@
           <div class="mc-deco top-right"></div>
           <div class="mc-deco bot-left"></div>
           <div class="mc-deco bot-right"></div>
-          <div class="mc-icon">🤖</div>
+          <div class="mc-icon">I[^-^]I</div>
           <div class="mc-title">UN JUGADOR</div>
           <div class="mc-sub">TÚ VS MÁQUINA</div>
         </button>
@@ -59,7 +59,7 @@
           <div class="mc-deco top-right"></div>
           <div class="mc-deco bot-left"></div>
           <div class="mc-deco bot-right"></div>
-          <div class="mc-icon">👾</div>
+          <div class="mc-icon">VS</div>
           <div class="mc-title">DOS JUGADORES</div>
           <div class="mc-sub">DUELO ÉPICO</div>
         </button>
@@ -78,17 +78,17 @@
        ═══════════════════════════════════ -->
   <div id="s-register" class="screen">
     <div class="register-wrap">
-      <div class="reg-hdr">⚡ ELIGE TU IDENTIDAD ⚡</div>
+      <div class="reg-hdr">ELIGE TU APODO</div>
 
       <!-- SOLO FORM -->
       <div id="reg-solo" class="reg-form hidden">
-        <div class="reg-avatar">🐱</div>
+        <div class="reg-avatar">#</div>
         <div class="reg-field-lbl">TU APODO</div>
         <div class="reg-input-wrap">
           <input id="inp-p1" class="reg-input" type="text" maxlength="14"
                  placeholder="ESCRIBE AQUÍ..." autocomplete="off" spellcheck="false" />
         </div>
-        <div class="reg-hint">Letras, números, emojis, símbolos — ¡lo que quieras!</div>
+        <div class="reg-hint">PON TU APODO COMO QUIERAS</div>
         <button class="next-btn" id="btn-reg-solo">SIGUIENTE <span class="arr">▶▶</span></button>
       </div>
 
@@ -113,10 +113,10 @@
             </div>
           </div>
         </div>
-        <button class="next-btn" id="btn-reg-duo">SIGUIENTE <span class="arr">▶▶</span></button>
+        <button class="next-btn" id="btn-reg-duo">SIGUIENTE <span class="arr">--></span></button>
       </div>
 
-      <button class="back-link" id="btn-back-reg">← VOLVER AL MENÚ</button>
+      <button class="back-link" id="btn-back-reg">← VOLVER AL MENU</button>
     </div>
   </div>
 
@@ -134,7 +134,7 @@
         </div>
         <div class="lv-middle">
           <div class="lv-vs">VS</div>
-          <div class="lv-cat">🐱</div>
+          <div class="lv-cat">#</div>
         </div>
         <div class="lv-player o-side">
           <div class="lv-sym o-clr">⊙</div>
@@ -143,10 +143,9 @@
       </div>
 
       <div class="lobby-rules">
-        <div class="lr-item"><span>✖</span>Alinea 3 seguidos para ganar</div>
-        <div class="lr-item"><span>🎲</span>El turno inicial es aleatorio</div>
-        <div class="lr-item"><span>🏆</span>Puntaje acumulado en la sesión</div>
-        <div class="lr-item"><span>🔊</span>Activa el volumen para la experiencia completa</div>
+        <div class="lr-item"><span>X/O</span>Alinea 3 seguidos para ganar</div>
+        <div class="lr-item"><span>[/]</span>El turno inicial es aleatorio</div>
+        <div class="lr-item"><span>[A+]</span>Puntaje acumulado en la sesión</div>
       </div>
 
       <button class="start-btn" id="btn-launch">
@@ -225,7 +224,7 @@
       <!-- GAME BUTTONS -->
       <div class="game-actions">
         <button class="g-btn primary" id="btn-next" disabled>SIGUIENTE RONDA ▶</button>
-        <button class="g-btn ghost"   id="btn-home">🏠 MENÚ</button>
+        <button class="g-btn ghost"   id="btn-home">MENU</button>
       </div>
 
     </div>
@@ -236,7 +235,507 @@
        ═══════════════════════════════════ -->
   <div id="modal" class="modal hidden">
     <div class="modal-box">
-      <div class="modal-emoji" id="m-emoji">🏆</div>
+      <div class="modal-emoji" id="m-emoji">T[^.^]T</div>
+      <div class="modal-title" id="m-title">¡GANASTE!</div>
+      <div class="modal-sub"   id="m-sub">JUGADOR</div>
+      <div class="modal-actions">
+        <button class="g-btn primary" id="m-btn-next">SIGUIENTE RONDA</button>
+        <button class="g-btn ghost"   id="m-btn-menu">MENÚ PRINCIPAL</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TIK TAK TOE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&family=Rajdhani:wght@300;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- BACKGROUND LAYERS -->
+  <canvas id="stars"></canvas>
+  <div class="bg-grid"></div>
+  <div class="bg-orbs">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+
+  <!-- AUDIO TOGGLE -->
+  <button id="audio-toggle" class="audio-btn" title="Alternar música">♫</button>
+
+  <!-- SPEECH BUBBLE -->
+  <div id="speech-bubble" class="speech-bubble hidden">
+    <span id="speech-text"></span>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SCREEN 1 — MENÚ PRINCIPAL
+       ═══════════════════════════════════ -->
+  <div id="s-menu" class="screen active">
+    <div class="menu-wrap">
+
+      <div class="title-block">
+        <div class="title-cat">#</div>
+        <h1 class="title-arcade">
+          <span class="ta-t">TIK</span><span class="ta-sep">✦</span><span class="ta-k">TAK</span><span class="ta-sep">✦</span><span class="ta-e">TOE</span>
+        </h1>
+        <p class="title-sub">EL JUEGO DEL GATITO</p>
+        <p class="title-blink">— INSERTA MONEDA —</p>
+      </div>
+
+      <div class="mode-grid">
+        <button class="mode-card" id="btn-solo">
+          <div class="mc-deco top-left"></div>
+          <div class="mc-deco top-right"></div>
+          <div class="mc-deco bot-left"></div>
+          <div class="mc-deco bot-right"></div>
+          <div class="mc-icon">I[^-^]I</div>
+          <div class="mc-title">UN JUGADOR</div>
+          <div class="mc-sub">TÚ VS MÁQUINA</div>
+        </button>
+
+        <button class="mode-card" id="btn-duo">
+          <div class="mc-deco top-left"></div>
+          <div class="mc-deco top-right"></div>
+          <div class="mc-deco bot-left"></div>
+          <div class="mc-deco bot-right"></div>
+          <div class="mc-icon">VS</div>
+          <div class="mc-title">DOS JUGADORES</div>
+          <div class="mc-sub">DUELO ÉPICO</div>
+        </button>
+      </div>
+
+      <div class="ticker-wrap">
+        <div class="ticker">
+          <span>★ TIK TAK TOE ★ EL JUEGO DEL GATITO ★ ¿QUIÉN GANARÁ HOY? ★ TIK TAK TOE ★ EL JUEGO DEL GATITO ★ ¿QUIÉN GANARÁ HOY? ★ </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SCREEN 2 — REGISTRO DE NOMBRE
+       ═══════════════════════════════════ -->
+  <div id="s-register" class="screen">
+    <div class="register-wrap">
+      <div class="reg-hdr">ELIGE TU APODO</div>
+
+      <!-- SOLO FORM -->
+      <div id="reg-solo" class="reg-form hidden">
+        <div class="reg-avatar">#</div>
+        <div class="reg-field-lbl">TU APODO</div>
+        <div class="reg-input-wrap">
+          <input id="inp-p1" class="reg-input" type="text" maxlength="14"
+                 placeholder="ESCRIBE AQUÍ..." autocomplete="off" spellcheck="false" />
+        </div>
+        <div class="reg-hint">PON TU APODO COMO QUIERAS</div>
+        <button class="next-btn" id="btn-reg-solo">SIGUIENTE <span class="arr">▶▶</span></button>
+      </div>
+
+      <!-- DUO FORM -->
+      <div id="reg-duo" class="reg-form hidden">
+        <div class="duo-row">
+          <div class="duo-side">
+            <div class="reg-avatar x-clr">✖</div>
+            <div class="reg-field-lbl">JUGADOR 1</div>
+            <div class="reg-input-wrap x-wrap">
+              <input id="inp-p1d" class="reg-input x-inp" type="text" maxlength="12"
+                     placeholder="APODO P1..." autocomplete="off" spellcheck="false" />
+            </div>
+          </div>
+          <div class="duo-vs">VS</div>
+          <div class="duo-side">
+            <div class="reg-avatar o-clr">⊙</div>
+            <div class="reg-field-lbl">JUGADOR 2</div>
+            <div class="reg-input-wrap o-wrap">
+              <input id="inp-p2d" class="reg-input o-inp" type="text" maxlength="12"
+                     placeholder="APODO P2..." autocomplete="off" spellcheck="false" />
+            </div>
+          </div>
+        </div>
+        <button class="next-btn" id="btn-reg-duo">SIGUIENTE <span class="arr">--></span></button>
+      </div>
+
+      <button class="back-link" id="btn-back-reg">← VOLVER AL MENU</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SCREEN 3 — LOBBY
+       ═══════════════════════════════════ -->
+  <div id="s-lobby" class="screen">
+    <div class="lobby-wrap">
+      <div class="lobby-title">LISTO PARA EL DUELO</div>
+
+      <div class="lobby-vs">
+        <div class="lv-player x-side">
+          <div class="lv-sym x-clr">✖</div>
+          <div class="lv-name" id="lob-p1">JUGADOR 1</div>
+        </div>
+        <div class="lv-middle">
+          <div class="lv-vs">VS</div>
+          <div class="lv-cat">#</div>
+        </div>
+        <div class="lv-player o-side">
+          <div class="lv-sym o-clr">⊙</div>
+          <div class="lv-name" id="lob-p2">MÁQUINA</div>
+        </div>
+      </div>
+
+      <div class="lobby-rules">
+        <div class="lr-item"><span>X/O</span>Alinea 3 seguidos para ganar</div>
+        <div class="lr-item"><span>[/]</span>El turno inicial es aleatorio</div>
+        <div class="lr-item"><span>[A+]</span>Puntaje acumulado en la sesión</div>
+      </div>
+
+      <button class="start-btn" id="btn-launch">
+        <span>¡INICIAR JUEGO!</span>
+        <div class="start-ring"></div>
+      </button>
+
+      <button class="back-link" id="btn-back-lobby">← VOLVER</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SCREEN 4 — JUEGO
+       ═══════════════════════════════════ -->
+  <div id="s-game" class="screen">
+    <div class="game-wrap">
+
+      <!-- SCOREBOARD -->
+      <div class="scoreboard">
+        <div class="sb-card" id="sbc-left">
+          <div class="sb-sym x-clr">✖</div>
+          <div class="sb-name" id="sb-name-l">P1</div>
+          <div class="sb-pts" id="sb-pts-l">0</div>
+        </div>
+        <div class="sb-mid">
+          <div class="sb-draw-lbl">EMPATES</div>
+          <div class="sb-draw-n" id="sb-draws">0</div>
+          <button class="sb-rst" id="btn-sb-reset" title="Reiniciar puntaje">↺</button>
+        </div>
+        <div class="sb-card" id="sbc-right">
+          <div class="sb-sym o-clr">⊙</div>
+          <div class="sb-name" id="sb-name-r">P2</div>
+          <div class="sb-pts" id="sb-pts-r">0</div>
+        </div>
+      </div>
+
+      <!-- TURN BAR -->
+      <div class="turn-bar">
+        <div class="turn-led" id="turn-led"></div>
+        <div class="turn-txt" id="turn-txt">PREPARANDO...</div>
+      </div>
+
+      <!-- BOARD -->
+      <div class="board-shell">
+        <!-- Column labels -->
+        <div class="col-labels">
+          <span></span><span>1</span><span>2</span><span>3</span>
+        </div>
+        <div class="board-inner">
+          <!-- Row labels -->
+          <div class="row-labels">
+            <span>A</span><span>B</span><span>C</span>
+          </div>
+          <div class="board" id="board">
+            <div class="cell" data-i="0" data-row="A" data-col="1"></div>
+            <div class="cell" data-i="1" data-row="A" data-col="2"></div>
+            <div class="cell" data-i="2" data-row="A" data-col="3"></div>
+            <div class="cell" data-i="3" data-row="B" data-col="1"></div>
+            <div class="cell" data-i="4" data-row="B" data-col="2"></div>
+            <div class="cell" data-i="5" data-row="B" data-col="3"></div>
+            <div class="cell" data-i="6" data-row="C" data-col="1"></div>
+            <div class="cell" data-i="7" data-row="C" data-col="2"></div>
+            <div class="cell" data-i="8" data-row="C" data-col="3"></div>
+            <svg class="win-svg" id="win-svg" viewBox="0 0 300 300">
+              <line id="win-line" x1="0" y1="0" x2="0" y2="0"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- COUNTDOWN OVERLAY (over board) -->
+      <div id="cd-overlay" class="cd-overlay hidden">
+        <div class="cd-num" id="cd-num">3</div>
+      </div>
+
+      <!-- GAME BUTTONS -->
+      <div class="game-actions">
+        <button class="g-btn primary" id="btn-next" disabled>SIGUIENTE RONDA ▶</button>
+        <button class="g-btn ghost"   id="btn-home">MENU</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       MODAL RESULTADO
+       ═══════════════════════════════════ -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-emoji" id="m-emoji">T[^.^]T</div>
+      <div class="modal-title" id="m-title">¡GANASTE!</div>
+      <div class="modal-sub"   id="m-sub">JUGADOR</div>
+      <div class="modal-actions">
+        <button class="g-btn primary" id="m-btn-next">SIGUIENTE RONDA</button>
+        <button class="g-btn ghost"   id="m-btn-menu">MENÚ PRINCIPAL</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TIK TAK TOE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&family=Rajdhani:wght@300;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- BACKGROUND LAYERS -->
+  <canvas id="stars"></canvas>
+  <div class="bg-grid"></div>
+  <div class="bg-orbs">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+
+  <!-- AUDIO TOGGLE -->
+  <button id="audio-toggle" class="audio-btn" title="Alternar música">♫</button>
+
+  <!-- SPEECH BUBBLE -->
+  <div id="speech-bubble" class="speech-bubble hidden">
+    <span id="speech-text"></span>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SCREEN 1 — MENÚ PRINCIPAL
+       ═══════════════════════════════════ -->
+  <div id="s-menu" class="screen active">
+    <div class="menu-wrap">
+
+      <div class="title-block">
+        <div class="title-cat">#</div>
+        <h1 class="title-arcade">
+          <span class="ta-t">TIK</span><span class="ta-sep">✦</span><span class="ta-k">TAK</span><span class="ta-sep">✦</span><span class="ta-e">TOE</span>
+        </h1>
+        <p class="title-sub">EL JUEGO DEL GATITO</p>
+        <p class="title-blink">— INSERTA MONEDA —</p>
+      </div>
+
+      <div class="mode-grid">
+        <button class="mode-card" id="btn-solo">
+          <div class="mc-deco top-left"></div>
+          <div class="mc-deco top-right"></div>
+          <div class="mc-deco bot-left"></div>
+          <div class="mc-deco bot-right"></div>
+          <div class="mc-icon">I[^-^]I</div>
+          <div class="mc-title">UN JUGADOR</div>
+          <div class="mc-sub">TÚ VS MÁQUINA</div>
+        </button>
+
+        <button class="mode-card" id="btn-duo">
+          <div class="mc-deco top-left"></div>
+          <div class="mc-deco top-right"></div>
+          <div class="mc-deco bot-left"></div>
+          <div class="mc-deco bot-right"></div>
+          <div class="mc-icon">VS</div>
+          <div class="mc-title">DOS JUGADORES</div>
+          <div class="mc-sub">DUELO ÉPICO</div>
+        </button>
+      </div>
+
+      <div class="ticker-wrap">
+        <div class="ticker">
+          <span>★ TIK TAK TOE ★ EL JUEGO DEL GATITO ★ ¿QUIÉN GANARÁ HOY? ★ TIK TAK TOE ★ EL JUEGO DEL GATITO ★ ¿QUIÉN GANARÁ HOY? ★ </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SCREEN 2 — REGISTRO DE NOMBRE
+       ═══════════════════════════════════ -->
+  <div id="s-register" class="screen">
+    <div class="register-wrap">
+      <div class="reg-hdr">ELIGE TU APODO</div>
+
+      <!-- SOLO FORM -->
+      <div id="reg-solo" class="reg-form hidden">
+        <div class="reg-avatar">#</div>
+        <div class="reg-field-lbl">TU APODO</div>
+        <div class="reg-input-wrap">
+          <input id="inp-p1" class="reg-input" type="text" maxlength="14"
+                 placeholder="ESCRIBE AQUÍ..." autocomplete="off" spellcheck="false" />
+        </div>
+        <div class="reg-hint">PON TU APODO COMO QUIERAS</div>
+        <button class="next-btn" id="btn-reg-solo">SIGUIENTE <span class="arr">▶▶</span></button>
+      </div>
+
+      <!-- DUO FORM -->
+      <div id="reg-duo" class="reg-form hidden">
+        <div class="duo-row">
+          <div class="duo-side">
+            <div class="reg-avatar x-clr">✖</div>
+            <div class="reg-field-lbl">JUGADOR 1</div>
+            <div class="reg-input-wrap x-wrap">
+              <input id="inp-p1d" class="reg-input x-inp" type="text" maxlength="12"
+                     placeholder="APODO P1..." autocomplete="off" spellcheck="false" />
+            </div>
+          </div>
+          <div class="duo-vs">VS</div>
+          <div class="duo-side">
+            <div class="reg-avatar o-clr">⊙</div>
+            <div class="reg-field-lbl">JUGADOR 2</div>
+            <div class="reg-input-wrap o-wrap">
+              <input id="inp-p2d" class="reg-input o-inp" type="text" maxlength="12"
+                     placeholder="APODO P2..." autocomplete="off" spellcheck="false" />
+            </div>
+          </div>
+        </div>
+        <button class="next-btn" id="btn-reg-duo">SIGUIENTE <span class="arr">--></span></button>
+      </div>
+
+      <button class="back-link" id="btn-back-reg">← VOLVER AL MENU</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SCREEN 3 — LOBBY
+       ═══════════════════════════════════ -->
+  <div id="s-lobby" class="screen">
+    <div class="lobby-wrap">
+      <div class="lobby-title">LISTO PARA EL DUELO</div>
+
+      <div class="lobby-vs">
+        <div class="lv-player x-side">
+          <div class="lv-sym x-clr">✖</div>
+          <div class="lv-name" id="lob-p1">JUGADOR 1</div>
+        </div>
+        <div class="lv-middle">
+          <div class="lv-vs">VS</div>
+          <div class="lv-cat">#</div>
+        </div>
+        <div class="lv-player o-side">
+          <div class="lv-sym o-clr">⊙</div>
+          <div class="lv-name" id="lob-p2">MÁQUINA</div>
+        </div>
+      </div>
+
+      <div class="lobby-rules">
+        <div class="lr-item"><span>X/O</span>Alinea 3 seguidos para ganar</div>
+        <div class="lr-item"><span>[/]</span>El turno inicial es aleatorio</div>
+        <div class="lr-item"><span>[A+]</span>Puntaje acumulado en la sesión</div>
+      </div>
+
+      <button class="start-btn" id="btn-launch">
+        <span>¡INICIAR JUEGO!</span>
+        <div class="start-ring"></div>
+      </button>
+
+      <button class="back-link" id="btn-back-lobby">← VOLVER</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SCREEN 4 — JUEGO
+       ═══════════════════════════════════ -->
+  <div id="s-game" class="screen">
+    <div class="game-wrap">
+
+      <!-- SCOREBOARD -->
+      <div class="scoreboard">
+        <div class="sb-card" id="sbc-left">
+          <div class="sb-sym x-clr">✖</div>
+          <div class="sb-name" id="sb-name-l">P1</div>
+          <div class="sb-pts" id="sb-pts-l">0</div>
+        </div>
+        <div class="sb-mid">
+          <div class="sb-draw-lbl">EMPATES</div>
+          <div class="sb-draw-n" id="sb-draws">0</div>
+          <button class="sb-rst" id="btn-sb-reset" title="Reiniciar puntaje">↺</button>
+        </div>
+        <div class="sb-card" id="sbc-right">
+          <div class="sb-sym o-clr">⊙</div>
+          <div class="sb-name" id="sb-name-r">P2</div>
+          <div class="sb-pts" id="sb-pts-r">0</div>
+        </div>
+      </div>
+
+      <!-- TURN BAR -->
+      <div class="turn-bar">
+        <div class="turn-led" id="turn-led"></div>
+        <div class="turn-txt" id="turn-txt">PREPARANDO...</div>
+      </div>
+
+      <!-- BOARD -->
+      <div class="board-shell">
+        <!-- Column labels -->
+        <div class="col-labels">
+          <span></span><span>1</span><span>2</span><span>3</span>
+        </div>
+        <div class="board-inner">
+          <!-- Row labels -->
+          <div class="row-labels">
+            <span>A</span><span>B</span><span>C</span>
+          </div>
+          <div class="board" id="board">
+            <div class="cell" data-i="0" data-row="A" data-col="1"></div>
+            <div class="cell" data-i="1" data-row="A" data-col="2"></div>
+            <div class="cell" data-i="2" data-row="A" data-col="3"></div>
+            <div class="cell" data-i="3" data-row="B" data-col="1"></div>
+            <div class="cell" data-i="4" data-row="B" data-col="2"></div>
+            <div class="cell" data-i="5" data-row="B" data-col="3"></div>
+            <div class="cell" data-i="6" data-row="C" data-col="1"></div>
+            <div class="cell" data-i="7" data-row="C" data-col="2"></div>
+            <div class="cell" data-i="8" data-row="C" data-col="3"></div>
+            <svg class="win-svg" id="win-svg" viewBox="0 0 300 300">
+              <line id="win-line" x1="0" y1="0" x2="0" y2="0"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- COUNTDOWN OVERLAY (over board) -->
+      <div id="cd-overlay" class="cd-overlay hidden">
+        <div class="cd-num" id="cd-num">3</div>
+      </div>
+
+      <!-- GAME BUTTONS -->
+      <div class="game-actions">
+        <button class="g-btn primary" id="btn-next" disabled>SIGUIENTE RONDA ▶</button>
+        <button class="g-btn ghost"   id="btn-home">MENU</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       MODAL RESULTADO
+       ═══════════════════════════════════ -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-emoji" id="m-emoji">T[^.^]T</div>
       <div class="modal-title" id="m-title">¡GANASTE!</div>
       <div class="modal-sub"   id="m-sub">JUGADOR</div>
       <div class="modal-actions">
